@@ -1,0 +1,15 @@
+C:\Users\tiagowx\Desktop\dotnet-project\RPGinConsole\bin\Debug\net6.0\RPGinConsole.exe
+C:\Users\tiagowx\Desktop\dotnet-project\RPGinConsole\bin\Debug\net6.0\RPGinConsole.deps.json
+C:\Users\tiagowx\Desktop\dotnet-project\RPGinConsole\bin\Debug\net6.0\RPGinConsole.runtimeconfig.json
+C:\Users\tiagowx\Desktop\dotnet-project\RPGinConsole\bin\Debug\net6.0\RPGinConsole.dll
+C:\Users\tiagowx\Desktop\dotnet-project\RPGinConsole\bin\Debug\net6.0\ref\RPGinConsole.dll
+C:\Users\tiagowx\Desktop\dotnet-project\RPGinConsole\bin\Debug\net6.0\RPGinConsole.pdb
+C:\Users\tiagowx\Desktop\dotnet-project\RPGinConsole\obj\Debug\net6.0\RPGinConsole.csproj.AssemblyReference.cache
+C:\Users\tiagowx\Desktop\dotnet-project\RPGinConsole\obj\Debug\net6.0\RPGinConsole.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tiagowx\Desktop\dotnet-project\RPGinConsole\obj\Debug\net6.0\RPGinConsole.AssemblyInfoInputs.cache
+C:\Users\tiagowx\Desktop\dotnet-project\RPGinConsole\obj\Debug\net6.0\RPGinConsole.AssemblyInfo.cs
+C:\Users\tiagowx\Desktop\dotnet-project\RPGinConsole\obj\Debug\net6.0\RPGinConsole.csproj.CoreCompileInputs.cache
+C:\Users\tiagowx\Desktop\dotnet-project\RPGinConsole\obj\Debug\net6.0\RPGinConsole.dll
+C:\Users\tiagowx\Desktop\dotnet-project\RPGinConsole\obj\Debug\net6.0\ref\RPGinConsole.dll
+C:\Users\tiagowx\Desktop\dotnet-project\RPGinConsole\obj\Debug\net6.0\RPGinConsole.pdb
+C:\Users\tiagowx\Desktop\dotnet-project\RPGinConsole\obj\Debug\net6.0\RPGinConsole.genruntimeconfig.cache

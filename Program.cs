@@ -1,6 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using RPGinConsole.Controllers;
 using RPGinConsole.Models;
+using RPGinConsole.Models.Enums;
 
 namespace RPGinConsole
 {
@@ -8,10 +10,11 @@ namespace RPGinConsole
   {
     static void Main(string[] args)
     {
-      Enemy enemies = new Enemy();
+      GameController gameController = new GameController();
 
-      enemies.constitution.AddPoint();
-      enemies.Attack();
+      gameController.Begin();
+
+
     }
   }
 }
