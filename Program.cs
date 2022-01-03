@@ -12,7 +12,7 @@ namespace RPGinConsole
     {
       GameController gameController = new GameController();
 
-      gameController.Begin();
+      gameController.Begin(null);
 
 
     }
