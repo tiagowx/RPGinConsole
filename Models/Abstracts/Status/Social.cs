@@ -24,7 +24,7 @@ namespace RPGinConsole.Models.Abstracts.Status
       }
 
       public void SetName(string _name) => this.name = _name;
-      public void SetCharClass(CharClasses charClasses) => this.charClass = charClass;
+      public void SetCharClass(CharClasses _charClass) => this.charClass = _charClass;
       public void SetLevel(int lvl) => level = lvl;
     }
   }

@@ -1,23 +1,23 @@
 using RPGinConsole.Models;
 using RPGinConsole.Models.Enums;
+using RPGinConsole.Views;
 
 namespace RPGinConsole.Controllers
 {
   public class GameController
   {
     public Hero hero;
-    public Enemy[] enemies;
+    public List<Enemy> enemies = new List<Enemy>();
+    public Map local = Map.FLORESTA;
+
+    public Render views = new Render();
 
     public string message;
     public void Begin(string? message)
     {
       Console.Clear();
-      Console.WriteLine("--- BEM VINDO --- \n");
-      Console.WriteLine("Para jogar digite um número referente a um item do Menu. \n");
-      Console.WriteLine("Menu: \n");
-      Console.WriteLine("\t 1- Jogar \n");
-      Console.WriteLine("\t 2- Tutorial \n");
-      Console.WriteLine("\t 3- Créditos \n");
+
+      views.BeginRender();
 
       if (!string.IsNullOrEmpty(message))
       {
@@ -26,18 +26,23 @@ namespace RPGinConsole.Controllers
 
 
       Console.Write("\n Sua escolha: ");
-      string choiceHero = Console.ReadLine();
+      string choiceHero = CheckChoices(Console.ReadLine(), 3);
 
       switch (choiceHero)
       {
         case "1":
-          HeroCreate(null);
+          BattleMode(null);
           break;
         case "2":
           Tutorial(null);
           break;
         case "3":
           Credits(null);
+          break;
+        case "0":
+          Console.Clear();
+          Console.WriteLine("Obrigado por jogar!");
+          Console.ReadLine();
           break;
         default:
           Begin("Mensagem: Digite uma escolha válida.");
@@ -88,6 +93,7 @@ namespace RPGinConsole.Controllers
           HeroCreate("Mensagem: Digite uma opção válida. \n");
           break;
       }
+      Context();
     }
 
     public void Tutorial(string? message)
@@ -118,7 +124,7 @@ namespace RPGinConsole.Controllers
     {
       Console.Clear();
       Console.WriteLine("--- CREDITOS --- \n");
-      // Instruções
+      // 
 
 
       Console.WriteLine("0- Voltar");
@@ -129,7 +135,129 @@ namespace RPGinConsole.Controllers
       }
 
       Console.Write("\n Sua escolha: ");
-      string choiceHero = Console.ReadLine();
+      string choice = Console.ReadLine();
+
+      if (choice == "0")
+        Begin(null);
+      else
+        Begin("Mensagem: Digite uma opção válida. \n ");
     }
+    public void Context()
+    {
+      Console.Clear();
+      Console.WriteLine("Contexto: ");
+      Console.WriteLine($"\nLocal: {local}");
+      Console.WriteLine($"Ameaças proximas: {enemies.Count}");
+      Console.WriteLine("\nSeu heroi:");
+      Console.WriteLine(@$"{hero.social.name}({hero.social.charClass}) 
+        HP: ({hero.constitution.hp}/{hero.constitution.maxHp}) 
+        MP: ({hero.mentality.mp}/{hero.mentality.maxMp}) 
+      ");
+      Console.WriteLine("\nAções:");
+      Console.WriteLine("\t 1- Seguir em frente");
+      Console.WriteLine("\t 2- Observar");
+      Console.WriteLine("\t 3- Status do héroi");
+      Console.WriteLine("\t 4- Atacar ameaça");
+      Console.WriteLine("\t 0- Voltar");
+
+      Console.Write("\n Sua escolha: ");
+      string choice = Console.ReadLine();
+
+      if (choice == "0")
+        Begin(null);
+      else
+        Begin("Mensagem: Digite uma opção válida. \n ");
+
+      switch (choice)
+      {
+        case "1":
+          break;
+        case "2":
+          break;
+        case "3":
+          break;
+        case "4":
+          break;
+        case "0":
+          break;
+      }
+    }
+
+    public List<Hero> heroes = new List<Hero>();
+    public void BattleMode(string? message)
+    {
+      if (heroes.Count == 0)
+      {
+        heroes.Add(new Hero("Mário", CharClasses.PALADIN));
+        heroes.Add(new Hero("Samira", CharClasses.HUNTER));
+        heroes.Add(new Hero("Sirius", CharClasses.MAGE));
+        heroes.Add(new Hero("Bárbara", CharClasses.CLERIG));
+      }
+
+      Console.Clear();
+      Console.WriteLine($"\nLocal: {local}");
+      Console.WriteLine("\n Hérois:");
+      for (int i = 0; i < heroes.Count; i++)
+      {
+        Console.WriteLine($@"({i + 1}) - {heroes[i].social.name}({heroes[i].social.charClass})
+        [HP:{heroes[i].constitution.hp}/{heroes[i].constitution.maxHp}] ");
+      }
+      Console.WriteLine("\n Inimigos:");
+      Console.WriteLine("\n Ações: (1) Atacar; (2) Usar Habilidade; (3) Ver Status; (4) Fugir;");
+
+      if (!string.IsNullOrEmpty(message))
+      {
+        Console.WriteLine($"\n{message}");
+      }
+
+      Console.Write("\n Sua escolha: ");
+      string choice = Console.ReadLine();
+
+      switch (choice)
+      {
+        case "1": // Atacar
+          break;
+        case "2": // Usar habilidade
+          break;
+        case "3": // Status
+          views.HeroStatusRender(heroes);
+          Console.Read();
+          BattleMode(null);
+          break;
+        case "4": // Fugir
+          break;
+        default:
+          BattleMode("Mensagem: Digite uma opção válida.");
+          break;
+      }
+    }
+
+    public void BasicAtack(string? message)
+    {
+      if (!string.IsNullOrEmpty(message))
+      {
+        Console.WriteLine($"\n{message}");
+      }
+
+      Console.Write("Digite o número do heroi que deseja usar para atacar: ");
+      string selected = Console.ReadLine();
+
+
+      Console.WriteLine("Digite o número do heroi que deseja usar para atacar.' ");
+    }
+
+    public string CheckChoices(string? choice, int ofChoices)
+    {
+      if (choice.Length > 1)
+        return "";
+
+      int n = Int32.Parse(choice);
+      if (n >= 0 && n <= ofChoices)
+        return choice;
+
+      return "";
+    }
+
   }
+
 }

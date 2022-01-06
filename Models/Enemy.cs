@@ -7,25 +7,28 @@ namespace RPGinConsole.Models
   {
     public Enemy(string _name, CharClasses charClass)
     {
-      this.social.SetName(_name);
-      this.social.SetCharClass(charClass);
+      social.SetName(_name);
+      social.SetCharClass(charClass);
 
       switch (charClass)
       {
         case CharClasses.PALADIN:
-          this.SetStatus(0,0,0,0,0,0);
-        break;
+          this.SetStatus(5, 9, 3, 3, 7, 3);
+          break;
         case CharClasses.HUNTER:
-          this.SetStatus(0,0,0,0,0,0);
-        break;
+          this.SetStatus(6, 5, 9, 3, 4, 3);
+          break;
         case CharClasses.MAGE:
-          this.SetStatus(0,0,0,0,0,0);
-        break;
+          this.SetStatus(3, 4, 3, 9, 6, 6);
+          break;
         case CharClasses.CLERIG:
-          this.SetStatus(0,0,0,0,0,0);
-        break;
-
+          this.SetStatus(3, 6, 3, 5, 8, 5);
+          break;
       }
+      this.social.SetLevel(1);
+      this.RefreshSubstatus();
+      Console.WriteLine($"{social.name} foi criada com sucesso e pertence a classe {social.charClass}.");
+
 
     }
 
