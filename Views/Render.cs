@@ -21,10 +21,10 @@ namespace RPGinConsole.Views
       Console.WriteLine("\n Hérois:");
       for (int i = 0; i < heroes.Count; i++)
       {
-        Console.WriteLine($@"({i + 1}) - {heroes[i].social.name}({heroes[i].social.charClass})
-        [HP:{heroes[i].constitution.hp}/{heroes[i].constitution.maxHp}] 
-        [MP:{heroes[i].mentality.mp}/{heroes[i].mentality.maxMp}] 
-        ");
+        string line = $"({i + 1}) - {heroes[i].social.name}({heroes[i].social.charClass})";
+        line += $"[HP:{heroes[i].constitution.hp}/{heroes[i].constitution.maxHp}]";
+        line += $" [MP:{heroes[i].mentality.mp}/{heroes[i].mentality.maxMp}]";
+        Console.WriteLine(line);
       }
     }
     public void EnemyRender(List<Enemy> enemies)
@@ -32,29 +32,34 @@ namespace RPGinConsole.Views
       Console.WriteLine("\n Hérois:");
       for (int i = 0; i < enemies.Count; i++)
       {
-        Console.WriteLine($@"({i + 1}) - {enemies[i].social.name}({enemies[i].social.charClass})
-        [HP:{enemies[i].constitution.hp}/{enemies[i].constitution.maxHp}] 
-        [MP:{enemies[i].mentality.mp}/{enemies[i].mentality.maxMp}] 
-        ");
-      }
-    }
-    public void HeroStatusRender(List<Hero> heroes)
-    {
-      Console.Clear();
-      Console.WriteLine($"# \t Nome \t\t\t STR \t CON \t DEX \t INT \t MEN \t WIT \n");
-      for (int i = 0; i < heroes.Count; i++)
-      {
-        string line = $"({i+1})";
-        line += $"\t{heroes[i].social.name}";
-        line += $"({heroes[i].social.charClass})";
-        line += $"\t\t  {heroes[i].strenght.value}";
-        line += $"\t  {heroes[i].constitution.value}";
-        line += $"\t  {heroes[i].dexterity.value}";
-        line += $"\t  {heroes[i].inteligence.value}";
-        line += $"\t  {heroes[i].mentality.value}";
-        line += $"\t  {heroes[i].wit.value}";
+        string line = $"({i + 1}) - {enemies[i].social.name}({enemies[i].social.charClass})";
+        line += $"[HP:{enemies[i].constitution.hp}/{enemies[i].constitution.maxHp}]";
+        line += $" [MP:{enemies[i].mentality.mp}/{enemies[i].mentality.maxMp}]";
         Console.WriteLine(line);
       }
+    }
+    public void HeroStatusRender(List<Hero> heroes, int i)
+    {
+      Console.Clear();
+      Console.WriteLine("---STATUS--- \n");
+      string status = $"({i + 1})";
+      status += $" {heroes[i].social.name}";
+      status += $" Lv.{heroes[i].social.level}";
+      status += $" ({heroes[i].social.charClass})";
+      status += $"\n STR {heroes[i].strenght.value}";
+      status += $"\n\t dano físico {heroes[i].strenght.damage}";
+      status += $"\n CON {heroes[i].constitution.value}";
+      status += $"\n\t defesa física {heroes[i].constitution.def}";
+      status += $"\n DEX {heroes[i].dexterity.value}";
+      status += $"\n\t chance de crítico {heroes[i].dexterity.criticalChance}";
+      status += $"\n INT {heroes[i].inteligence.value}";
+      status += $"\n\t dano mágico {heroes[i].inteligence.magicDamage}";
+      status += $"\n MEN {heroes[i].mentality.value}";
+      status += $"\n\t defesa mágica {heroes[i].mentality.magicDef}";
+      status += $"\n WIT {heroes[i].wit.value}";
+      status += $"\n\t chance de obliterar {heroes[i].wit.chanceOverHit}";
+      Console.WriteLine(status);
+
       Console.WriteLine("\n Pressione qualquer tecla para voltar.");
     }
     public void BestiariRender(List<Enemy> enemies)
@@ -63,7 +68,7 @@ namespace RPGinConsole.Views
       Console.WriteLine($"# \t Nome \t\t\t STR \t CON \t DEX \t INT \t MEN \t WIT \n");
       for (int i = 0; i < enemies.Count; i++)
       {
-        string enemy = $"({i+1})";
+        string enemy = $"({i + 1})";
         enemy += $"\t{enemies[i].social.name}";
         enemy += $"({enemies[i].social.charClass})";
         enemy += $"\t\t  {enemies[i].strenght.value}";
@@ -76,6 +81,6 @@ namespace RPGinConsole.Views
       }
       Console.WriteLine("\n Pressione qualquer tecla para voltar.");
     }
-   
+
   }
 }

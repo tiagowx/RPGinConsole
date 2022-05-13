@@ -26,20 +26,20 @@ namespace RPGinConsole.Controllers
 
 
       Console.Write("\n Sua escolha: ");
-      string choiceHero = CheckChoices(Console.ReadLine(), 3);
+      int choiceHero = CheckChoices(Console.ReadLine(), 3);
 
       switch (choiceHero)
       {
-        case "1":
+        case 1:
           BattleMode(null);
           break;
-        case "2":
+        case 2:
           Tutorial(null);
           break;
-        case "3":
+        case 3:
           Credits(null);
           break;
-        case "0":
+        case 0:
           Console.Clear();
           Console.WriteLine("Obrigado por jogar!");
           Console.ReadLine();
@@ -49,53 +49,6 @@ namespace RPGinConsole.Controllers
           break;
       }
     }
-
-    public void HeroCreate(string? message)
-    {
-      Console.Clear();
-      Console.WriteLine("\t Escolha a classe de seu héroi.");
-      Console.WriteLine("\t\t 1- Paladino");
-      Console.WriteLine("\t\t 2- Caçador");
-      Console.WriteLine("\t\t 3- Maga");
-      Console.WriteLine("\t\t 4- Clériga \n");
-
-      if (!string.IsNullOrEmpty(message))
-      {
-        Console.WriteLine(message);
-      }
-
-      Console.Write("\n Sua escolha: ");
-      string choiceHero = Console.ReadLine();
-
-      if (string.IsNullOrEmpty(choiceHero)) HeroCreate("\n Menssagem: Voxê não digitou sua escolha de classe.");
-
-      Console.Write("\n Escreva o nome dele(a): ");
-      string heroName = Console.ReadLine();
-
-      if (string.IsNullOrEmpty(heroName)) HeroCreate("\n Menssagem: O nome do personagem não pode ser vazio.");
-
-
-      switch (choiceHero)
-      {
-        case "1":
-          hero = new Hero(heroName, CharClasses.PALADIN);
-          break;
-        case "2":
-          hero = new Hero(heroName, CharClasses.HUNTER);
-          break;
-        case "3":
-          hero = new Hero(heroName, CharClasses.MAGE);
-          break;
-        case "4":
-          hero = new Hero(heroName, CharClasses.CLERIG);
-          break;
-        default:
-          HeroCreate("Mensagem: Digite uma opção válida. \n");
-          break;
-      }
-      Context();
-    }
-
     public void Tutorial(string? message)
     {
       Console.Clear();
@@ -142,46 +95,6 @@ namespace RPGinConsole.Controllers
       else
         Begin("Mensagem: Digite uma opção válida. \n ");
     }
-    public void Context()
-    {
-      Console.Clear();
-      Console.WriteLine("Contexto: ");
-      Console.WriteLine($"\nLocal: {local}");
-      Console.WriteLine($"Ameaças proximas: {enemies.Count}");
-      Console.WriteLine("\nSeu heroi:");
-      Console.WriteLine(@$"{hero.social.name}({hero.social.charClass}) 
-        HP: ({hero.constitution.hp}/{hero.constitution.maxHp}) 
-        MP: ({hero.mentality.mp}/{hero.mentality.maxMp}) 
-      ");
-      Console.WriteLine("\nAções:");
-      Console.WriteLine("\t 1- Seguir em frente");
-      Console.WriteLine("\t 2- Observar");
-      Console.WriteLine("\t 3- Status do héroi");
-      Console.WriteLine("\t 4- Atacar ameaça");
-      Console.WriteLine("\t 0- Voltar");
-
-      Console.Write("\n Sua escolha: ");
-      string choice = Console.ReadLine();
-
-      if (choice == "0")
-        Begin(null);
-      else
-        Begin("Mensagem: Digite uma opção válida. \n ");
-
-      switch (choice)
-      {
-        case "1":
-          break;
-        case "2":
-          break;
-        case "3":
-          break;
-        case "4":
-          break;
-        case "0":
-          break;
-      }
-    }
 
     public List<Hero> heroes = new List<Hero>();
     public void BattleMode(string? message)
@@ -194,15 +107,16 @@ namespace RPGinConsole.Controllers
         heroes.Add(new Hero("Bárbara", CharClasses.CLERIG));
       }
 
+      SpownEnemy();
+
       Console.Clear();
       Console.WriteLine($"\nLocal: {local}");
       Console.WriteLine("\n Hérois:");
-      for (int i = 0; i < heroes.Count; i++)
-      {
-        Console.WriteLine($@"({i + 1}) - {heroes[i].social.name}({heroes[i].social.charClass})
-        [HP:{heroes[i].constitution.hp}/{heroes[i].constitution.maxHp}] ");
-      }
+      views.HeroRender(heroes);
+
       Console.WriteLine("\n Inimigos:");
+      views.EnemyRender(enemies);
+
       Console.WriteLine("\n Ações: (1) Atacar; (2) Usar Habilidade; (3) Ver Status; (4) Fugir;");
 
       if (!string.IsNullOrEmpty(message))
@@ -211,20 +125,23 @@ namespace RPGinConsole.Controllers
       }
 
       Console.Write("\n Sua escolha: ");
-      string choice = Console.ReadLine();
+      int choice = CheckChoices(Console.ReadLine(), 4);
 
       switch (choice)
       {
-        case "1": // Atacar
+        case 1:
+          BasicAtack(null);
           break;
-        case "2": // Usar habilidade
+        case 2: // Usar habilidade
           break;
-        case "3": // Status
-          views.HeroStatusRender(heroes);
+        case 3: // Status
+          Console.WriteLine("Escolha o héroi:");
+          int i = CheckChoices(Console.ReadLine(), heroes.Count);
+          views.HeroStatusRender(heroes, i - 1);
           Console.Read();
           BattleMode(null);
           break;
-        case "4": // Fugir
+        case 4: // Fugir
           break;
         default:
           BattleMode("Mensagem: Digite uma opção válida.");
@@ -239,23 +156,34 @@ namespace RPGinConsole.Controllers
         Console.WriteLine($"\n{message}");
       }
 
-      Console.Write("Digite o número do heroi que deseja usar para atacar: ");
-      string selected = Console.ReadLine();
+      Console.Write("Digite o número do heroi atacante: ");
+      int heroSelected = CheckChoices(Console.ReadLine(), heroes.Count);
 
+      Console.Write("Digite o número do alvo: ");
+      int enemySelected = CheckChoices(Console.ReadLine(), enemies.Count);
 
-      Console.WriteLine("Digite o número do heroi que deseja usar para atacar.' ");
+      BattleMode($"{heroes[heroSelected - 1].social.name} atacou e causou {enemies[enemySelected - 1].constitution.ReceiveDamage(heroes[heroSelected - 1].strenght.damage)}");
     }
 
-    public string CheckChoices(string? choice, int ofChoices)
+    public void SpownEnemy()
     {
-      if (choice.Length > 1)
-        return "";
+      if (enemies.Count == 0)
+      {
+        enemies.Add(new Enemy("Slime", CharClasses.CLERIG));
+      }
+    }
+
+    public int CheckChoices(string? choice, int ofChoices)
+    {
+
+      if (choice.Length > 1 || string.IsNullOrEmpty(choice))
+        return 9;
 
       int n = Int32.Parse(choice);
       if (n >= 0 && n <= ofChoices)
-        return choice;
+        return n;
 
-      return "";
+      return 9;
     }
 
   }
